@@ -1,0 +1,165 @@
+[
+    {
+        "id": "9987a43fc9833dc0",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "faebd0662ad8d056",
+        "type": "debug",
+        "z": "9987a43fc9833dc0",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1340,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "19b43291993c9a82",
+        "type": "mqtt in",
+        "z": "9987a43fc9833dc0",
+        "name": "Som",
+        "topic": "MACK10402805/Som",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "a77ce65b8e782dc1",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 690,
+        "y": 260,
+        "wires": [
+            [
+                "74dd0b767d2c2587",
+                "afed95d98a339b3d"
+            ]
+        ]
+    },
+    {
+        "id": "74dd0b767d2c2587",
+        "type": "influxdb out",
+        "z": "9987a43fc9833dc0",
+        "influxdb": "75fe868763195753",
+        "name": "",
+        "measurement": "Som",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "database",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "proj",
+        "bucket": "Som_dados",
+        "x": 1030,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "42096f9d80b2d8c5",
+        "type": "http request",
+        "z": "9987a43fc9833dc0",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1140,
+        "y": 280,
+        "wires": [
+            [
+                "faebd0662ad8d056"
+            ]
+        ]
+    },
+    {
+        "id": "afed95d98a339b3d",
+        "type": "function",
+        "z": "9987a43fc9833dc0",
+        "name": "function 1",
+        "func": "let token = \"8205748146:AAHPFRd5mRrVZrTW0cd55gVRyGeO2ztGLcg\";\nlet chat_id = \"5593081068\";\n\nlet valor = Number(msg.payload);\n\n\nif (valor >= 65) {\n    let texto = `Nível de ruído alto detectado: ${valor} dB`;\n\n    msg.method = \"GET\";\n    msg.url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(texto)}`;\n    return msg; \n}\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 260,
+        "wires": [
+            [
+                "42096f9d80b2d8c5"
+            ]
+        ]
+    },
+    {
+        "id": "a77ce65b8e782dc1",
+        "type": "mqtt-broker",
+        "name": "mqtt",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "75fe868763195753",
+        "type": "influxdb",
+        "hostname": "127.0.0.1",
+        "port": 8086,
+        "protocol": "http",
+        "database": "database",
+        "name": "",
+        "usetls": false,
+        "tls": "",
+        "influxdbVersion": "2.0",
+        "url": "https://us-east-1-1.aws.cloud2.influxdata.com",
+        "timeout": 10,
+        "rejectUnauthorized": true
+    },
+    {
+        "id": "3daa2e7e6d323976",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-contrib-influxdb": "0.7.0"
+        }
+    }
+]
