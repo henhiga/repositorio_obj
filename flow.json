@@ -93,7 +93,7 @@
         "type": "function",
         "z": "9987a43fc9833dc0",
         "name": "function 1",
-        "func": "let token = \"8205748146:AAHPFRd5mRrVZrTW0cd55gVRyGeO2ztGLcg\";\nlet chat_id = \"5593081068\";\n\nlet valor = Number(msg.payload);\n\n\nif (valor >= 65) {\n    let texto = `Nível de ruído alto detectado: ${valor} dB`;\n\n    msg.method = \"GET\";\n    msg.url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(texto)}`;\n    return msg; \n}\n\nreturn null;",
+        "func": "let token = \"token_exemplo(retirado por seguranca do git)\";\nlet chat_id = \"5593081068\";\n\nlet valor = Number(msg.payload);\n\n\nif (valor >= 65) {\n    let texto = `Nível de ruído alto detectado: ${valor} dB`;\n\n    msg.method = \"GET\";\n    msg.url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(texto)}`;\n    return msg; \n}\n\nreturn null;",
         "outputs": 1,
         "timeout": 0,
         "noerr": 0,
